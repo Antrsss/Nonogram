@@ -4,15 +4,15 @@
 #include <QWidget>
 #include <QFileDialog>
 #include <QPixmap>
-#include <QBitmap>
 #include <QPainter>
 #include <QDebug>
 #include <QTableWidgetItem>
 #include <QTableWidget>
 #include <QTableView>
 #include <QImage>
-
+#include <QRect>
 #include "Picture.h"
+#include "pictureservice.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -27,15 +27,11 @@ class Widget : public QWidget
 private:
     QString _path = nullptr;
 
-    QSize _size = QSize(0, 0);
-
-    int matrix20[20][20];
+    void paintEvent(QPaintEvent *event);
 
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
-
-    void createNonogram(QImage image);
 
     //void paintEvent(QPaintEvent *, QString path);
 

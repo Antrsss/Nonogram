@@ -9,7 +9,7 @@
 
 class Picture {
 public:
-    QImage image;
+    QImage _image;
 };
 
 

@@ -1,6 +1,7 @@
 /home/zgdarya/QTWORKS/Nonogram/cmake-build-debug/Nonogram_autogen/EWIEGA46WW/moc_widget.cpp: /home/zgdarya/QTWORKS/Nonogram/widget.h \
   /home/zgdarya/QTWORKS/Nonogram/cmake-build-debug/Nonogram_autogen/moc_predefs.h \
   /home/zgdarya/QTWORKS/Nonogram/Picture.h \
+  /home/zgdarya/QTWORKS/Nonogram/pictureservice.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
   /usr/include/assert.h \
@@ -245,6 +246,7 @@
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/QDebug \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/QRect \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qabstractitemmodel.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qalgorithms.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qarraydata.h \
