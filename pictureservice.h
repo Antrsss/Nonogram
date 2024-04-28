@@ -7,6 +7,7 @@
 
 #include <QWidget>
 #include <QDebug>
+#include <QTableWidget>
 
 
 QT_BEGIN_NAMESPACE
@@ -23,10 +24,15 @@ public:
 
     void createNonogram(QImage image);
 
+    QTableWidget nonogram;
+
 private:
     Ui::PictureService *ui;
 
     int matrix20[20][20];
+
+private slots:
+    void on_nonogram_cellClicked(int row, int column);
 };
 
 

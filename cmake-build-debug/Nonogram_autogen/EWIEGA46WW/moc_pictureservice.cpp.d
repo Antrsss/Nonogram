@@ -244,6 +244,7 @@
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/QDebug \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qabstractitemmodel.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qalgorithms.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qarraydata.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic.h \
@@ -264,6 +265,7 @@
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qhash.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qhashfunctions.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qiodevice.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qitemselectionmodel.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qiterator.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qline.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h \
@@ -284,6 +286,7 @@
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qrect.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qrefcount.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qregexp.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qregularexpression.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qscopedpointer.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qset.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qshareddata.h \
@@ -311,6 +314,7 @@
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qfont.h \
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qfontinfo.h \
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qfontmetrics.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtGui/qicon.h \
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qimage.h \
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qkeysequence.h \
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qmatrix.h \
@@ -325,9 +329,25 @@
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qtgui-config.h \
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qtguiglobal.h \
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qtransform.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtGui/qvalidator.h \
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qwindowdefs.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QTableWidget \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QWidget \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractitemdelegate.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractitemview.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractscrollarea.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractslider.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractspinbox.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qframe.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qrubberband.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qsizepolicy.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qslider.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qstyle.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qstyleoption.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtabbar.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtableview.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtablewidget.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtabwidget.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwidgets-config.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwidgetsglobal.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qwidget.h \

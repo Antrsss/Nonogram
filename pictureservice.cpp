@@ -12,6 +12,8 @@ PictureService::PictureService(QWidget *parent) :
         QWidget(parent), ui(new Ui::PictureService) {
     ui->setupUi(this);
     //ui->nonogram->setMaximumSize(parent->width(), parent->height());
+    connect(ui->nonogram, SIGNAL(cellClicked(int, int)),
+            this, SLOT(on_nonogram_cellClicked(int, int)));
 }
 
 PictureService::~PictureService() {
@@ -37,17 +39,17 @@ void PictureService::createNonogram(QImage image) {
         //ui->nonogram->setItem(new QTableWidgetItem->setBackground(QBrush(QColor())))
         ui->nonogram->setColumnWidth(0, ui->nonogram->width() - size.width() * delta);
 
-        for (int i = 1; i < size.width() + 1; ++i) {
-            for (int j = 1; j < size.height() + 1; ++j) {
-                if (image.pixel(i - 1, j - 1) == WHITE_NUMBER) {
-                    matrix20[i - 1][j - 1] = 0;
+        for (int i = 0; i < size.width(); ++i) {
+            for (int j = 0; j < size.height(); ++j) {
+                if (image.pixel(i, j) == WHITE_NUMBER) {
+                    matrix20[i][j] = 0;
                 }
                 else {
-                    matrix20[i - 1][j - 1] = 1;
+                    matrix20[i][j] = 1;
                 }
             }
         }
-        qDebug() << "before numbers";
+
         QString numbers;
         for (int i = 0, column = 0; i < size.height(); ++i) {
             for (int j = 0; j < size.width(); ++j) {
@@ -80,6 +82,33 @@ void PictureService::createNonogram(QImage image) {
             numbers.clear();
         }
 
+        for (int i = 1; i < size.height() + 1; ++i) {
+            if (ui->nonogram->item(i, 0)->text() == "") {
+                for (int j = 1; j < size.width() + 1; ++j) {
+                    ui->nonogram->setItem(i, j, new QTableWidgetItem(QString("❌")));
+                    ui->nonogram->item(i,j)->setTextAlignment(Qt::AlignCenter);
+                }
+            }
+        }
+        for (int j = 1; j < size.width() + 1; ++j) {
+            if (ui->nonogram->item(0, j)->text() == "") {
+                for (int i = 1; i < size.width() + 1; ++i) {
+                    ui->nonogram->setItem(i, j, new QTableWidgetItem(QString("❌")));
+                    ui->nonogram->item(i,j)->setTextAlignment(Qt::AlignCenter);
+                }
+            }
+        }
         qDebug() << "Table was created";
+    }
+}
+
+void PictureService::on_nonogram_cellClicked(int row, int column) {
+    ui->nonogram->setItem(row, column, new QTableWidgetItem);
+    if (matrix20[row - 1][column - 1] == 1) {
+        ui->nonogram->item(row, column)->setBackground(Qt::black);
+    }
+    else {
+        ui->nonogram->setItem(row, column, new QTableWidgetItem(QString("❌")));
+        ui->nonogram->item(row,column)->setTextAlignment(Qt::AlignCenter);
     }
 }

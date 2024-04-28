@@ -28,7 +28,7 @@ public:
     {
         if (PictureService->objectName().isEmpty())
             PictureService->setObjectName(QString::fromUtf8("PictureService"));
-        PictureService->resize(1083, 818);
+        PictureService->resize(1083, 819);
         gridLayout = new QGridLayout(PictureService);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         nonogram = new QTableWidget(PictureService);
