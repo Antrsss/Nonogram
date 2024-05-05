@@ -13,6 +13,7 @@
 #include <QRect>
 #include "Picture.h"
 #include "pictureservice.h"
+#include <QLabel>
 
 
 QT_BEGIN_NAMESPACE
@@ -44,7 +45,13 @@ private slots:
 
     void on_start_clicked();
 
+    void on_updateScore_button_clicked();
+
 private:
     Ui::Widget *ui;
+    QString _scoreFile;
+    std::ifstream input;
+    std::ofstream output; //write
+    int _profileScore;
 };
 #endif // WIDGET_H

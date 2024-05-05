@@ -5,9 +5,30 @@
 #ifndef NONOGRAM_PICTURESERVICE_H
 #define NONOGRAM_PICTURESERVICE_H
 
+const long WHITE_NUMBER = 4294967295;
+const int MAX_SIZE = 32; // Максимальный размер строки или столбца
+
 #include <QWidget>
-#include <QDebug>
 #include <QTableWidget>
+#include <QImage>
+#include <QFileDialog>
+#include <QTimer>
+#include <QTime>
+#include <QColor>
+#include <QApplication>
+#include <QPushButton>
+#include <QLabel>
+#include <QDebug>
+
+#include <fstream>
+#include <iostream>
+#include <vector>
+#include <bitset>
+#include <cmath>
+#include <unordered_map>
+
+
+using namespace std;
 
 
 QT_BEGIN_NAMESPACE
@@ -29,10 +50,40 @@ public:
 private:
     Ui::PictureService *ui;
 
-    int matrix20[20][20];
+    int _matrix40[40][40];
+    int _coloredCellsRow[40]{0};
+    int _coloredCellsColumns[40] {0};
+    int _filledCellsRow[40] {0};
+    int _filledCellsColumn[40] {0};
+    int _coloredCells;
+    int _filledCells;
+    int _mistakes;
+    int _seconds;
+    int _gameScore;
+    int _profileScore;
+    QSize _size;
+    QTimer* timer;
+    QWidget* _gameOver;
+    QWidget* _nonogramSolved;
+    QPushButton* ok_button;
+    QPushButton* yep_button;
+    QLineEdit* _singleSolution_lineEdit;
+    std::ifstream input;
+    std::ofstream output; //write
+    QString _scoreFile = "/home/zgdarya/QTWORKS/Nonogram/Score.txt";
+
+    void calculateGameScore();
+    void calculateProfileScore();
+
+    vector<bitset<MAX_SIZE>> imageToNonogram(const QImage& image, int upBoard, int downBoard, int leftBoard, int rightBoard);
+    vector<bitset<MAX_SIZE>> countGroups(const bitset<MAX_SIZE>& row);
+    bool isUniqueSolution(const vector<bitset<MAX_SIZE>>& nonogram);
+
 
 private slots:
     void on_nonogram_cellClicked(int row, int column);
+    void showTime();
+    void on_ok_button_clicked();
 };
 
 

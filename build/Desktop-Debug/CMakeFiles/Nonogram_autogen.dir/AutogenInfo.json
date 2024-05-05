@@ -142,6 +142,12 @@
 	"HEADERS" : 
 	[
 		[
+			"/home/zgdarya/QTWORKS/Nonogram/pictureservice.h",
+			"MU",
+			"EWIEGA46WW/moc_pictureservice.cpp",
+			null
+		],
+		[
 			"/home/zgdarya/QTWORKS/Nonogram/widget.h",
 			"MU",
 			"EWIEGA46WW/moc_widget.cpp",
@@ -200,6 +206,7 @@
 	"SOURCES" : 
 	[
 		[ "/home/zgdarya/QTWORKS/Nonogram/main.cpp", "MU", null ],
+		[ "/home/zgdarya/QTWORKS/Nonogram/pictureservice.cpp", "MU", null ],
 		[ "/home/zgdarya/QTWORKS/Nonogram/widget.cpp", "MU", null ]
 	],
 	"UIC_OPTIONS" : [],

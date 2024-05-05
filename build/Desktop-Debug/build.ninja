@@ -79,6 +79,16 @@ build CMakeFiles/Nonogram.dir/widget.cpp.o: CXX_COMPILER__Nonogram_unscanned_Deb
   TARGET_COMPILE_PDB = CMakeFiles/Nonogram.dir/
   TARGET_PDB = Nonogram.pdb
 
+build CMakeFiles/Nonogram.dir/pictureservice.cpp.o: CXX_COMPILER__Nonogram_unscanned_Debug /home/zgdarya/QTWORKS/Nonogram/pictureservice.cpp || cmake_object_order_depends_target_Nonogram
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Nonogram.dir/pictureservice.cpp.o.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fcolor-diagnostics -fPIC
+  INCLUDES = -I/home/zgdarya/QTWORKS/Nonogram/build/Desktop-Debug/Nonogram_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = CMakeFiles/Nonogram.dir
+  OBJECT_FILE_DIR = CMakeFiles/Nonogram.dir
+  TARGET_COMPILE_PDB = CMakeFiles/Nonogram.dir/
+  TARGET_PDB = Nonogram.pdb
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Nonogram
@@ -87,7 +97,7 @@ build CMakeFiles/Nonogram.dir/widget.cpp.o: CXX_COMPILER__Nonogram_unscanned_Deb
 #############################################
 # Link the executable Nonogram
 
-build Nonogram: CXX_EXECUTABLE_LINKER__Nonogram_Debug CMakeFiles/Nonogram.dir/Nonogram_autogen/mocs_compilation.cpp.o CMakeFiles/Nonogram.dir/main.cpp.o CMakeFiles/Nonogram.dir/widget.cpp.o | /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.10 /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.10 /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.10 || Nonogram_autogen Nonogram_autogen_timestamp_deps
+build Nonogram: CXX_EXECUTABLE_LINKER__Nonogram_Debug CMakeFiles/Nonogram.dir/Nonogram_autogen/mocs_compilation.cpp.o CMakeFiles/Nonogram.dir/main.cpp.o CMakeFiles/Nonogram.dir/widget.cpp.o CMakeFiles/Nonogram.dir/pictureservice.cpp.o | /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.10 /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.10 /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.10 || Nonogram_autogen Nonogram_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -g
   LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.10  /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.10  /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.10
   OBJECT_DIR = CMakeFiles/Nonogram.dir
@@ -173,7 +183,7 @@ build Nonogram_autogen_timestamp_deps: phony CMakeFiles/Nonogram_autogen_timesta
 #############################################
 # Utility command for Nonogram_autogen
 
-build Nonogram_autogen: phony CMakeFiles/Nonogram_autogen Nonogram_autogen/include/ui_widget.h Nonogram_autogen/timestamp Nonogram_autogen/mocs_compilation.cpp Nonogram_autogen_timestamp_deps
+build Nonogram_autogen: phony CMakeFiles/Nonogram_autogen Nonogram_autogen/include/ui_widget.h Nonogram_autogen/include/ui_pictureservice.h Nonogram_autogen/timestamp Nonogram_autogen/mocs_compilation.cpp Nonogram_autogen_timestamp_deps
 
 
 #############################################
@@ -189,13 +199,13 @@ build Nonogram_autogen/timestamp Nonogram_autogen/mocs_compilation.cpp | ${cmake
 #############################################
 # Phony custom command for CMakeFiles/Nonogram_autogen_timestamp_deps
 
-build CMakeFiles/Nonogram_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/Nonogram_autogen_timestamp_deps: phony /usr/lib/qt5/bin/uic /usr/lib/qt5/bin/moc /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.10
+build CMakeFiles/Nonogram_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/Nonogram_autogen_timestamp_deps: phony /usr/lib/qt5/bin/moc /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.10 /usr/lib/qt5/bin/uic
 
 
 #############################################
 # Phony custom command for CMakeFiles/Nonogram_autogen
 
-build CMakeFiles/Nonogram_autogen Nonogram_autogen/include/ui_widget.h | ${cmake_ninja_workdir}CMakeFiles/Nonogram_autogen ${cmake_ninja_workdir}Nonogram_autogen/include/ui_widget.h: phony Nonogram_autogen/timestamp || Nonogram_autogen_timestamp_deps
+build CMakeFiles/Nonogram_autogen Nonogram_autogen/include/ui_widget.h Nonogram_autogen/include/ui_pictureservice.h | ${cmake_ninja_workdir}CMakeFiles/Nonogram_autogen ${cmake_ninja_workdir}Nonogram_autogen/include/ui_widget.h ${cmake_ninja_workdir}Nonogram_autogen/include/ui_pictureservice.h: phony Nonogram_autogen/timestamp || Nonogram_autogen_timestamp_deps
 
 # =============================================================================
 # Target aliases.
