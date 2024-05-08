@@ -61,8 +61,10 @@ private:
     int _seconds;
     int _gameScore;
     int _profileScore;
+    QImage _image;
     QSize _size;
-    QTimer* timer;
+    QTimer* _timer;
+    QTimer* _successMessageTimer;
     QWidget* _gameOver;
     QWidget* _nonogramSolved;
     QPushButton* ok_button;
@@ -84,6 +86,7 @@ private slots:
     void on_nonogram_cellClicked(int row, int column);
     void showTime();
     void on_ok_button_clicked();
+    void showSuccessMessage();
 };
 
 
