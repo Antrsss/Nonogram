@@ -52,3 +52,12 @@
 28	3136	1714997328485323053	CMakeFiles/Nonogram.dir/widget.cpp.o	35fdee40ea68dcae
 29	3595	1714997328937354419	CMakeFiles/Nonogram.dir/pictureservice.cpp.o	3f5887485000ce81
 3595	4218	1714997329557393262	Nonogram	65237747de25fb48
+15	358	1715352371723870663	Nonogram_autogen/timestamp	1f920a141e330d08
+15	358	1715352371723870663	Nonogram_autogen/mocs_compilation.cpp	1f920a141e330d08
+15	358	1715352371723870663	/home/zgdarya/QTWORKS/Nonogram/cmake-build-debug/Nonogram_autogen/timestamp	1f920a141e330d08
+15	358	1715352371723870663	/home/zgdarya/QTWORKS/Nonogram/cmake-build-debug/Nonogram_autogen/mocs_compilation.cpp	1f920a141e330d08
+358	3375	1715352374743875389	CMakeFiles/Nonogram.dir/Nonogram_autogen/mocs_compilation.cpp.o	5a676f718901be82
+358	3379	1715352374747875394	CMakeFiles/Nonogram.dir/main.cpp.o	b956cbe6aa5a6054
+359	3728	1715352375095875858	CMakeFiles/Nonogram.dir/widget.cpp.o	35fdee40ea68dcae
+359	3951	1715352375319876130	CMakeFiles/Nonogram.dir/pictureservice.cpp.o	3f5887485000ce81
+3951	4604	1715352375963876914	Nonogram	65237747de25fb48

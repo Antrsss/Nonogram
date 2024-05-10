@@ -61,9 +61,9 @@ void Widget::on_exit_clicked() {
 void Widget::on_start_clicked() {
     if (_path != nullptr) {
         PictureService* pictureService = new PictureService(this);
-        Picture picture;
-        picture._image = QImage(_path);
-        pictureService->createNonogram(picture._image);
+        QImage image;
+        image = QImage(_path);
+        pictureService->createNonogram(image);
         pictureService->show();
     }
 }

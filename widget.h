@@ -11,20 +11,18 @@
 #include <QTableView>
 #include <QImage>
 #include <QRect>
-#include "Picture.h"
 #include "pictureservice.h"
 #include <QLabel>
 
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class Widget;
+    class Widget;
 }
 QT_END_NAMESPACE
 
-class Widget : public QWidget
-{
-    Q_OBJECT
+class Widget : public QWidget {
+Q_OBJECT
 private:
     QString _path = nullptr;
 
@@ -32,6 +30,7 @@ private:
 
 public:
     Widget(QWidget *parent = nullptr);
+
     ~Widget();
 
     //void paintEvent(QPaintEvent *, QString path);
@@ -54,4 +53,5 @@ private:
     std::ofstream output; //write
     int _profileScore;
 };
+
 #endif // WIDGET_H

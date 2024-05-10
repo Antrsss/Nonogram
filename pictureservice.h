@@ -52,9 +52,9 @@ private:
 
     int _matrix40[40][40];
     int _coloredCellsRow[40]{0};
-    int _coloredCellsColumns[40] {0};
-    int _filledCellsRow[40] {0};
-    int _filledCellsColumn[40] {0};
+    int _coloredCellsColumns[40]{0};
+    int _filledCellsRow[40]{0};
+    int _filledCellsColumn[40]{0};
     int _coloredCells;
     int _filledCells;
     int _mistakes;
@@ -63,29 +63,37 @@ private:
     int _profileScore;
     QImage _image;
     QSize _size;
-    QTimer* _timer;
-    QTimer* _successMessageTimer;
-    QWidget* _gameOver;
-    QWidget* _nonogramSolved;
-    QPushButton* ok_button;
-    QPushButton* yep_button;
-    QLineEdit* _singleSolution_lineEdit;
+    QTimer *_timer;
+    QTimer *_successMessageTimer;
+    QWidget *_gameOver;
+    QWidget *_nonogramSolved;
+    QPushButton *ok_button;
+    QPushButton *yep_button;
+    QLineEdit *_singleSolution_lineEdit;
     std::ifstream input;
     std::ofstream output; //write
     QString _scoreFile = "/home/zgdarya/QTWORKS/Nonogram/Score.txt";
 
     void calculateGameScore();
+
     void calculateProfileScore();
 
-    vector<bitset<MAX_SIZE>> imageToNonogram(const QImage& image, int upBoard, int downBoard, int leftBoard, int rightBoard);
-    vector<bitset<MAX_SIZE>> countGroups(const bitset<MAX_SIZE>& row);
-    bool isUniqueSolution(const vector<bitset<MAX_SIZE>>& nonogram);
+    vector<bitset<MAX_SIZE>>
+    imageToNonogram(const QImage &image, int upBoard, int downBoard, int leftBoard, int rightBoard);
+
+    vector<bitset<MAX_SIZE>> countGroups(const bitset<MAX_SIZE> &row);
+
+    bool isUniqueSolution(const vector<bitset<MAX_SIZE>> &nonogram);
 
 
 private slots:
+
     void on_nonogram_cellClicked(int row, int column);
+
     void showTime();
+
     void on_ok_button_clicked();
+
     void showSuccessMessage();
 };
 

@@ -12,7 +12,7 @@ PictureService::PictureService(QWidget *parent) :
     ui->setupUi(this);
 
     //размер экрана
-    this->setGeometry(0, 0,parent->width(), parent->height());
+    this->setGeometry(0, 0, parent->width(), parent->height());
 
     //обнуление данных
     _coloredCells = 0;
@@ -52,15 +52,14 @@ PictureService::PictureService(QWidget *parent) :
     ok_button = new QPushButton(_gameOver);
     ok_button->setGeometry((_gameOver->width() - 100) / 2, (_gameOver->height()) / 2 + 50, 100, 50);
     ok_button->setText("Ok");
-    QLabel* gameOverLabel = new QLabel(_gameOver);
+    QLabel *gameOverLabel = new QLabel(_gameOver);
     gameOverLabel->setText("Game over!");
     QFont font = gameOverLabel->font();
     font.setPointSize(36);
     gameOverLabel->setFont(font);
     gameOverLabel->setGeometry((_gameOver->width() - 250) / 2, (_gameOver->height() - 75) / 2, 250, 40);
 
-    connect(ok_button, SIGNAL(clicked(bool))
-            , this, SLOT(on_ok_button_clicked()));
+    connect(ok_button, SIGNAL(clicked(bool)), this, SLOT(on_ok_button_clicked()));
 
     //уведомление Nonogram Solved!
     _nonogramSolved = new QWidget(this);
@@ -70,15 +69,15 @@ PictureService::PictureService(QWidget *parent) :
     yep_button = new QPushButton(_nonogramSolved);
     yep_button->setGeometry((_nonogramSolved->width() - 100) / 2, (_nonogramSolved->height()) / 2 + 50, 100, 50);
     yep_button->setText("Yep!");
-    QLabel* nonogramSolvedLabel = new QLabel(_nonogramSolved);
+    QLabel *nonogramSolvedLabel = new QLabel(_nonogramSolved);
     nonogramSolvedLabel->setText("Nonogram Solved!");
     font = nonogramSolvedLabel->font();
     font.setPointSize(30);
     nonogramSolvedLabel->setFont(font);
-    nonogramSolvedLabel->setGeometry((_nonogramSolved->width() - 340) / 2, (_nonogramSolved->height() - 200) / 2, 340, 50);
+    nonogramSolvedLabel->setGeometry((_nonogramSolved->width() - 340) / 2, (_nonogramSolved->height() - 200) / 2, 340,
+                                     50);
 
-    connect(yep_button, SIGNAL(clicked(bool))
-            , this, SLOT(on_ok_button_clicked()));
+    connect(yep_button, SIGNAL(clicked(bool)), this, SLOT(on_ok_button_clicked()));
 
     //результат проверки на единственность решения нонограммы
     _singleSolution_lineEdit = new QLineEdit(this);
@@ -98,7 +97,9 @@ void PictureService::createNonogram(QImage image) {
     if (_size != QSize(0, 0)) {
 
         //создание таблицы
-        ui->nonogram->setGeometry((this->width() - ui->nonogram->width()) / 2, (this->height() - ui->nonogram->height()) / 2, ui->nonogram->width(), ui->nonogram->height());
+        ui->nonogram->setGeometry((this->width() - ui->nonogram->width()) / 2,
+                                  (this->height() - ui->nonogram->height()) / 2, ui->nonogram->width(),
+                                  ui->nonogram->height());
         ui->nonogram->setRowCount(_size.height() + 1);
         ui->nonogram->setColumnCount(_size.width() + 1);
         ui->nonogram->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -117,8 +118,7 @@ void PictureService::createNonogram(QImage image) {
             for (int j = 0; j < _size.width(); ++j) {
                 if (image.pixel(j, i) == WHITE_NUMBER) {
                     _matrix40[i][j] = 0;
-                }
-                else {
+                } else {
                     _matrix40[i][j] = 1;
                     ++_coloredCells;
                     _coloredCellsRow[i] += 1;
@@ -137,7 +137,7 @@ void PictureService::createNonogram(QImage image) {
                     column = 0;
                 }
             }
-            if (column != 0){
+            if (column != 0) {
                 numbers += QString::number(column) + QString(' ');
                 column = 0;
             }
@@ -174,7 +174,7 @@ void PictureService::createNonogram(QImage image) {
             if (ui->nonogram->item(i, 0)->text() == "") {
                 for (int j = 1; j < _size.width() + 1; ++j) {
                     ui->nonogram->setItem(i, j, new QTableWidgetItem(QString("❌")));
-                    ui->nonogram->item(i,j)->setTextAlignment(Qt::AlignCenter);
+                    ui->nonogram->item(i, j)->setTextAlignment(Qt::AlignCenter);
                 }
             }
         }
@@ -182,7 +182,7 @@ void PictureService::createNonogram(QImage image) {
             if (ui->nonogram->item(0, j)->text() == "") {
                 for (int i = 1; i < _size.width() + 1; ++i) {
                     ui->nonogram->setItem(i, j, new QTableWidgetItem(QString("❌")));
-                    ui->nonogram->item(i,j)->setTextAlignment(Qt::AlignCenter);
+                    ui->nonogram->item(i, j)->setTextAlignment(Qt::AlignCenter);
                 }
             }
         }
@@ -224,8 +224,7 @@ void PictureService::createNonogram(QImage image) {
             _singleSolution_lineEdit->setText("Nonogram has single solution!");
             _singleSolution_lineEdit->setGeometry((this->width() - 440) / 2, 40, 440, 50);
             qDebug() << "Single";
-        }
-        else {
+        } else {
             _singleSolution_lineEdit->setText("Nonogram has multiple solutions!");
             _singleSolution_lineEdit->setGeometry((this->width() - 490) / 2, 50, 490, 50);
             qDebug() << "Multiple";
@@ -235,7 +234,7 @@ void PictureService::createNonogram(QImage image) {
 
 void PictureService::on_nonogram_cellClicked(int row, int column) {
     if (row != 0 && column != 0) {
-        if (_filledCells < _coloredCells){
+        if (_filledCells < _coloredCells) {
             if (_matrix40[row - 1][column - 1] == 1) {
                 if (ui->nonogram->item(row, column)->background() != Qt::black) {
                     ui->nonogram->item(row, column)->setBackground(Qt::black);
@@ -243,8 +242,7 @@ void PictureService::on_nonogram_cellClicked(int row, int column) {
                     ++_filledCellsRow[row - 1];
                     ++_filledCellsColumn[column - 1];
                 }
-            }
-            else if (ui->nonogram->item(row, column)->text() != "❌") {
+            } else if (ui->nonogram->item(row, column)->text() != "❌") {
                 ui->nonogram->setItem(row, column, new QTableWidgetItem(QString("❌")));
                 ui->nonogram->item(row, column)->setTextAlignment(Qt::AlignCenter);
                 ++_mistakes;
@@ -265,13 +263,13 @@ void PictureService::on_nonogram_cellClicked(int row, int column) {
         if (_filledCellsColumn[column - 1] == _coloredCellsColumns[column - 1]) {
             for (int i = 1; i <= _size.width(); ++i) {
                 if (ui->nonogram->item(i, column)->background() != Qt::black) {
-                    ui->nonogram->setItem( i, column, new QTableWidgetItem(QString("❌")));
+                    ui->nonogram->setItem(i, column, new QTableWidgetItem(QString("❌")));
                     ui->nonogram->item(i, column)->setTextAlignment(Qt::AlignCenter);
                 }
             }
         }
         if (_filledCells == _coloredCells) {
-            qDebug() <<  _coloredCells << _filledCells;
+            qDebug() << _coloredCells << _filledCells;
             disconnect(_timer, SIGNAL(timeout()), this, SLOT(showTime()));
             calculateGameScore();
             calculateProfileScore();
@@ -289,7 +287,7 @@ void PictureService::on_nonogram_cellClicked(int row, int column) {
             connect(_successMessageTimer, SIGNAL(timeout()), this, SLOT(showSuccessMessage()));
             _successMessageTimer->start();
         }
-        qDebug() <<  _coloredCells << _filledCells;
+        qDebug() << _coloredCells << _filledCells;
     }
 }
 
@@ -300,14 +298,12 @@ void PictureService::showTime() {
     QString minutesString, secondsString;
     if (minutes < 10) {
         minutesString = '0' + QString::number(minutes);
-    }
-    else {
+    } else {
         minutesString = QString::number(minutes);
     }
     if (seconds < 10) {
         secondsString = '0' + QString::number(seconds);
-    }
-    else {
+    } else {
         secondsString = QString::number(seconds);
     }
     QString timeFromStart = minutesString + " : " + secondsString;
@@ -321,7 +317,8 @@ void PictureService::on_ok_button_clicked() {
 }
 
 void PictureService::calculateGameScore() {
-    _gameScore =  (1 - _mistakes * 0.15) * (300 / _seconds + 23) * (sqrt(powl(_size.width(),2) * powl(_size.height(),2)) * 10);
+    _gameScore = (1 - _mistakes * 0.15) * (300 / _seconds + 23) *
+                 (sqrt(powl(_size.width(), 2) * powl(_size.height(), 2)) * 10);
 }
 
 void PictureService::calculateProfileScore() {
@@ -360,7 +357,7 @@ vector<bitset<MAX_SIZE>> PictureService::imageToNonogram(const QImage &image, in
 }
 
 // Функция для подсчета групп символов в строке
-vector<bitset<MAX_SIZE>> PictureService::countGroups(const bitset<MAX_SIZE>& row) {
+vector<bitset<MAX_SIZE>> PictureService::countGroups(const bitset<MAX_SIZE> &row) {
     vector<bitset<MAX_SIZE>> groups;
     bitset<MAX_SIZE> currentGroup;
     for (int i = 0; i < row.size(); ++i) {
@@ -386,7 +383,7 @@ bool PictureService::isUniqueSolution(const vector<bitset<MAX_SIZE>> &nonogram) 
     // Подсчет групп символов для каждой строки
     for (int i = 0; i < nonogram.size(); ++i) {
         vector<bitset<MAX_SIZE>> groups = countGroups(nonogram[i]);
-        for (auto& group : groups) {
+        for (auto &group: groups) {
             rowCounts[group]++;
         }
     }
@@ -398,19 +395,19 @@ bool PictureService::isUniqueSolution(const vector<bitset<MAX_SIZE>> &nonogram) 
             col.set(i, nonogram[i].test(j));
         }
         vector<bitset<MAX_SIZE>> groups = countGroups(col);
-        for (auto& group : groups) {
+        for (auto &group: groups) {
             colCounts[group]++;
         }
     }
 
     // Проверка единственности решения
-    for (auto& p : rowCounts) {
+    for (auto &p: rowCounts) {
         qDebug() << "Second: " << p.second;
         if (p.second > 1) {
             return false;
         }
     }
-    for (auto& p : colCounts) {
+    for (auto &p: colCounts) {
         qDebug() << "Second: " << p.second;
         if (p.second > 1) {
             return false;
@@ -421,7 +418,7 @@ bool PictureService::isUniqueSolution(const vector<bitset<MAX_SIZE>> &nonogram) 
 }
 
 void PictureService::showSuccessMessage() {
-    QLabel* gameScoreLabel = new QLabel(_nonogramSolved);
+    QLabel *gameScoreLabel = new QLabel(_nonogramSolved);
     gameScoreLabel->setText("Game Score: " + QString::number(_gameScore));
     QFont font = gameScoreLabel->font();
     font.setPointSize(24);
