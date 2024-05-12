@@ -1,9 +1,0 @@
-/home/zgdarya/QTWORKS/Nonogram/build/Desktop-Debug/CMakeFiles/Nonogram.dir
-/home/zgdarya/QTWORKS/Nonogram/build/Desktop-Debug/CMakeFiles/edit_cache.dir
-/home/zgdarya/QTWORKS/Nonogram/build/Desktop-Debug/CMakeFiles/rebuild_cache.dir
-/home/zgdarya/QTWORKS/Nonogram/build/Desktop-Debug/CMakeFiles/list_install_components.dir
-/home/zgdarya/QTWORKS/Nonogram/build/Desktop-Debug/CMakeFiles/install.dir
-/home/zgdarya/QTWORKS/Nonogram/build/Desktop-Debug/CMakeFiles/install/local.dir
-/home/zgdarya/QTWORKS/Nonogram/build/Desktop-Debug/CMakeFiles/install/strip.dir
-/home/zgdarya/QTWORKS/Nonogram/build/Desktop-Debug/CMakeFiles/Nonogram_autogen_timestamp_deps.dir
-/home/zgdarya/QTWORKS/Nonogram/build/Desktop-Debug/CMakeFiles/Nonogram_autogen.dir
