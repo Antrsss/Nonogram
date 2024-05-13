@@ -6,7 +6,8 @@
 #define NONOGRAM_PICTURESERVICE_H
 
 const long WHITE_NUMBER = 4294967295;
-const int MAX_SIZE = 32; // Максимальный размер строки или столбца
+const int MAX_SIZE = 40;
+const int TIMER_INTERVAL = 5000;
 
 #include <QWidget>
 #include <QTableWidget>
@@ -61,6 +62,7 @@ private:
     int _seconds;
     int _gameScore;
     int _profileScore;
+    double _gameComplexity;
     QImage _image;
     QSize _size;
     QTimer *_timer;
@@ -70,6 +72,7 @@ private:
     QPushButton *ok_button;
     QPushButton *yep_button;
     QLineEdit *_singleSolution_lineEdit;
+    QLineEdit *_gameComplexity_lineEdit;
     std::ifstream input;
     std::ofstream output; //write
     QString _scoreFile = "/home/zgdarya/QTWORKS/Nonogram/Score.txt";
@@ -78,12 +81,13 @@ private:
 
     void calculateProfileScore();
 
-    vector<bitset<MAX_SIZE>>
-    imageToNonogram(const QImage &image, int upBoard, int downBoard, int leftBoard, int rightBoard);
+    void calculateGameComplexity();
+
+    vector<bitset<MAX_SIZE>> imageToNonogram(const QImage &image, int upBoard, int downBoard, int leftBoard, int rightBoard);
 
     vector<bitset<MAX_SIZE>> countGroups(const bitset<MAX_SIZE> &row);
 
-    bool isUniqueSolution(const vector<bitset<MAX_SIZE>> &nonogram);
+    bool isUniqueSolution(const vector<bitset<MAX_SIZE>>& nonogram);
 
 
 private slots:

@@ -7,6 +7,17 @@
 #include "pictureservice.h"
 #include "ui_pictureservice.h"
 
+struct VectorBitsetHash {
+    size_t operator()(const vector<bitset<MAX_SIZE>>& v) const {
+        size_t seed = v.size();
+        for (const auto& bs : v) {
+            seed ^= hash<bitset<MAX_SIZE>>{}(bs) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+        }
+        return seed;
+    }
+};
+
+
 PictureService::PictureService(QWidget *parent) :
         QWidget(parent), ui(new Ui::PictureService) {
     ui->setupUi(this);
@@ -36,7 +47,9 @@ PictureService::PictureService(QWidget *parent) :
     _timer = new QTimer(this);
     _timer->setInterval(1000);
     ui->timer->setText(QString("00 : 00"));
+    ui->timer->setReadOnly(true);
     ui->mistakes->setText(QString("Mistakes: 0"));
+    ui->mistakes->setReadOnly(true);
     connect(_timer, SIGNAL(timeout()), this, SLOT(showTime()));
     _timer->start();
 
@@ -84,6 +97,14 @@ PictureService::PictureService(QWidget *parent) :
     font = _singleSolution_lineEdit->font();
     font.setPointSize(24);
     _singleSolution_lineEdit->setFont(font);
+    _singleSolution_lineEdit->setReadOnly(true);
+
+    //
+    _gameComplexity_lineEdit = new QLineEdit(this);
+    font = _gameComplexity_lineEdit->font();
+    font.setPointSize(24);
+    _gameComplexity_lineEdit->setFont(font);
+    _gameComplexity_lineEdit->setReadOnly(true);
 }
 
 PictureService::~PictureService() {
@@ -217,18 +238,24 @@ void PictureService::createNonogram(QImage image) {
             }
         }
 
+        qDebug() << upBoard << downBoard << leftBoard << rightBoard;
         //анализ единственности решения
         vector<bitset<MAX_SIZE>> nonogram = imageToNonogram(image, upBoard, downBoard, leftBoard, rightBoard);
 
         if (isUniqueSolution(nonogram)) {
             _singleSolution_lineEdit->setText("Nonogram has single solution!");
-            _singleSolution_lineEdit->setGeometry((this->width() - 440) / 2, 40, 440, 50);
+            _singleSolution_lineEdit->setGeometry((this->width() - 440) / 2, 50, 440, 50);
             qDebug() << "Single";
         } else {
             _singleSolution_lineEdit->setText("Nonogram has multiple solutions!");
             _singleSolution_lineEdit->setGeometry((this->width() - 490) / 2, 50, 490, 50);
             qDebug() << "Multiple";
         }
+
+        calculateGameComplexity();
+        _gameComplexity_lineEdit->setText(QString::number(_gameComplexity));
+        _gameComplexity_lineEdit->setGeometry(this->_singleSolution_lineEdit->width(), 50, 40, 50);
+        _gameComplexity_lineEdit->isReadOnly();
     }
 }
 
@@ -269,7 +296,6 @@ void PictureService::on_nonogram_cellClicked(int row, int column) {
             }
         }
         if (_filledCells == _coloredCells) {
-            qDebug() << _coloredCells << _filledCells;
             disconnect(_timer, SIGNAL(timeout()), this, SLOT(showTime()));
             calculateGameScore();
             calculateProfileScore();
@@ -283,11 +309,10 @@ void PictureService::on_nonogram_cellClicked(int row, int column) {
                 }
             }
             _successMessageTimer = new QTimer(this);
-            _successMessageTimer->setInterval(10000);
+            _successMessageTimer->setInterval(TIMER_INTERVAL);
             connect(_successMessageTimer, SIGNAL(timeout()), this, SLOT(showSuccessMessage()));
             _successMessageTimer->start();
         }
-        qDebug() << _coloredCells << _filledCells;
     }
 }
 
@@ -317,8 +342,8 @@ void PictureService::on_ok_button_clicked() {
 }
 
 void PictureService::calculateGameScore() {
-    _gameScore = (1 - _mistakes * 0.15) * (300 / _seconds + 23) *
-                 (sqrt(powl(_size.width(), 2) * powl(_size.height(), 2)) * 10);
+    _gameScore = (1 - _mistakes * 0.2) * (300 / _seconds + 10) *
+                 (sqrt(powl(_size.width(), 2) + powl(_size.height(), 2)) * 10);
 }
 
 void PictureService::calculateProfileScore() {
@@ -336,13 +361,9 @@ void PictureService::calculateProfileScore() {
 
 
 // Функция для преобразования изображения QImage в нонограмму (массив битов)
-vector<bitset<MAX_SIZE>> PictureService::imageToNonogram(const QImage &image, int upBoard, int downBoard, int leftBoard,
-                                                         int rightBoard) {
-    --upBoard;
-    --downBoard;
-    --leftBoard;
-    --rightBoard;
+vector<bitset<MAX_SIZE>> PictureService::imageToNonogram(const QImage& image, int upBoard, int downBoard, int leftBoard, int rightBoard) {
     vector<bitset<MAX_SIZE>> nonogram;
+    --upBoard, --downBoard, --leftBoard, --rightBoard;
     for (int i = upBoard; i <= downBoard; ++i) {
         bitset<MAX_SIZE> row;
         for (int j = leftBoard; j <= rightBoard; ++j) {
@@ -357,7 +378,7 @@ vector<bitset<MAX_SIZE>> PictureService::imageToNonogram(const QImage &image, in
 }
 
 // Функция для подсчета групп символов в строке
-vector<bitset<MAX_SIZE>> PictureService::countGroups(const bitset<MAX_SIZE> &row) {
+vector<bitset<MAX_SIZE>> PictureService::countGroups(const bitset<MAX_SIZE>& row) {
     vector<bitset<MAX_SIZE>> groups;
     bitset<MAX_SIZE> currentGroup;
     for (int i = 0; i < row.size(); ++i) {
@@ -377,13 +398,13 @@ vector<bitset<MAX_SIZE>> PictureService::countGroups(const bitset<MAX_SIZE> &row
 }
 
 // Функция для проверки единственности решения
-bool PictureService::isUniqueSolution(const vector<bitset<MAX_SIZE>> &nonogram) {
+bool PictureService::isUniqueSolution(const vector<bitset<MAX_SIZE>>& nonogram) {
     unordered_map<bitset<MAX_SIZE>, int> rowCounts, colCounts;
 
     // Подсчет групп символов для каждой строки
     for (int i = 0; i < nonogram.size(); ++i) {
         vector<bitset<MAX_SIZE>> groups = countGroups(nonogram[i]);
-        for (auto &group: groups) {
+        for (auto& group : groups) {
             rowCounts[group]++;
         }
     }
@@ -395,20 +416,18 @@ bool PictureService::isUniqueSolution(const vector<bitset<MAX_SIZE>> &nonogram) 
             col.set(i, nonogram[i].test(j));
         }
         vector<bitset<MAX_SIZE>> groups = countGroups(col);
-        for (auto &group: groups) {
+        for (auto& group : groups) {
             colCounts[group]++;
         }
     }
 
     // Проверка единственности решения
-    for (auto &p: rowCounts) {
-        qDebug() << "Second: " << p.second;
+    for (auto& p : rowCounts) {
         if (p.second > 1) {
             return false;
         }
     }
-    for (auto &p: colCounts) {
-        qDebug() << "Second: " << p.second;
+    for (auto& p : colCounts) {
         if (p.second > 1) {
             return false;
         }
@@ -417,15 +436,41 @@ bool PictureService::isUniqueSolution(const vector<bitset<MAX_SIZE>> &nonogram) 
     return true;
 }
 
+
+
 void PictureService::showSuccessMessage() {
     QLabel *gameScoreLabel = new QLabel(_nonogramSolved);
     gameScoreLabel->setText("Game Score: " + QString::number(_gameScore));
     QFont font = gameScoreLabel->font();
     font.setPointSize(24);
     gameScoreLabel->setFont(font);
-    gameScoreLabel->setGeometry((_nonogramSolved->width() - 250) / 2, (_nonogramSolved->height() - 50) / 2, 250, 50);
+    gameScoreLabel->setGeometry((_nonogramSolved->width() - 300) / 2, (_nonogramSolved->height() - 50) / 2, 300, 50);
     _nonogramSolved->show();
     _successMessageTimer->stop();
 }
+
+void PictureService::calculateGameComplexity() {
+    double coloredCellsCount = 0;
+    double uncoloredCells = 0;
+    for (int i = 0; i < _size.height(); ++i) {
+        for (int j = 0; j < _size.width(); ++j)
+            if (_matrix40[i][j] == 1)
+                coloredCellsCount += 1;
+        else if (ui->nonogram->item(0, j + 1)->text() != "" && ui->nonogram->item(i + 1, 0)->text() != "")
+            uncoloredCells += 1;
+    }
+    _gameComplexity = 1 - coloredCellsCount / uncoloredCells;
+    if (_gameComplexity <= 0.2)
+        _gameComplexity = 1;
+    else if (_gameComplexity > 0.2 && _gameComplexity <= 0.4)
+        _gameComplexity = 2;
+    else if (_gameComplexity > 0.4 && _gameComplexity <= 0.6)
+        _gameComplexity = 3;
+    else if (_gameComplexity > 0.6 && _gameComplexity <= 0.8)
+        _gameComplexity = 4;
+    else
+        _gameComplexity = 5;
+}
+
 
 

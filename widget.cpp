@@ -20,7 +20,6 @@ Widget::Widget(QWidget *parent)
     QFont font = ui->profileScore_lineEdit->font();
     font.setPointSize(16);
     ui->profileScore_lineEdit->setFont(font);
-    //profileScoreLabel->setGeometry((this->width() - profileScoreLabel->width()) / 2, (profileScoreLabel->height() - 75) / 2, profileScoreLabel->width(), profileScoreLabel->height());
 }
 
 Widget::~Widget() {
@@ -35,20 +34,6 @@ void Widget::paintEvent(QPaintEvent *event) {
     painter->drawImage(*rect,*image);
     painter->end();
 }
-
-/*void Widget::paintEvent(QPaintEvent *, QString path) {
-    *//*QPainter painter;
-    painter.begin(this);
-    painter.drawPixmap(0, 0, QPixmap("/home/zgdarya/QTWORKS/Nonogram/strawberry.jpg"));
-    QBitmap bitmap(QPixmap("../strawberry.jpg"));*//*
-    QPixmap *ii = new QBitmap(QPixmap(path));
-    QPainter p(this);
-    p.drawPixmap(10,10, *ii);
-    p.end();
-    //QImage * _image  = new QImage("/home/zgdarya/QTWORKS/Task1/Untitled.jpeg");
-    //painter.end();
-}*/
-
 
 void Widget::on_add_new_nonogram_clicked() {
     _path = QFileDialog::getOpenFileName(nullptr, "Open Files", "../Pictures", "png file (*.png);;");
