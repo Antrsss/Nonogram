@@ -7,16 +7,6 @@
 #include "pictureservice.h"
 #include "ui_pictureservice.h"
 
-struct VectorBitsetHash {
-    size_t operator()(const vector<bitset<MAX_SIZE>>& v) const {
-        size_t seed = v.size();
-        for (const auto& bs : v) {
-            seed ^= hash<bitset<MAX_SIZE>>{}(bs) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-        }
-        return seed;
-    }
-};
-
 
 PictureService::PictureService(QWidget *parent) :
         QWidget(parent), ui(new Ui::PictureService) {
@@ -342,8 +332,9 @@ void PictureService::on_ok_button_clicked() {
 }
 
 void PictureService::calculateGameScore() {
+    calculateGameComplexity();
     _gameScore = (1 - _mistakes * 0.2) * (300 / _seconds + 10) *
-                 (sqrt(powl(_size.width(), 2) + powl(_size.height(), 2)) * 10);
+                 (sqrt(powl(_size.width(), 2) + powl(_size.height(), 2)) * 10) * (1 + _gameComplexity / 100);
 }
 
 void PictureService::calculateProfileScore() {
@@ -357,83 +348,6 @@ void PictureService::calculateProfileScore() {
         output << std::to_string(_profileScore);
         output.close();
     }
-}
-
-
-// Функция для преобразования изображения QImage в нонограмму (массив битов)
-vector<bitset<MAX_SIZE>> PictureService::imageToNonogram(const QImage& image, int upBoard, int downBoard, int leftBoard, int rightBoard) {
-    vector<bitset<MAX_SIZE>> nonogram;
-    --upBoard, --downBoard, --leftBoard, --rightBoard;
-    for (int i = upBoard; i <= downBoard; ++i) {
-        bitset<MAX_SIZE> row;
-        for (int j = leftBoard; j <= rightBoard; ++j) {
-            QColor pixelColor = image.pixelColor(j, i);
-            if (pixelColor != Qt::white) {
-                row.set(j);
-            }
-        }
-        nonogram.push_back(row);
-    }
-    return nonogram;
-}
-
-// Функция для подсчета групп символов в строке
-vector<bitset<MAX_SIZE>> PictureService::countGroups(const bitset<MAX_SIZE>& row) {
-    vector<bitset<MAX_SIZE>> groups;
-    bitset<MAX_SIZE> currentGroup;
-    for (int i = 0; i < row.size(); ++i) {
-        if (row.test(i)) {
-            currentGroup.set(i);
-        } else {
-            if (currentGroup.any()) {
-                groups.push_back(currentGroup);
-                currentGroup.reset();
-            }
-        }
-    }
-    if (currentGroup.any()) {
-        groups.push_back(currentGroup);
-    }
-    return groups;
-}
-
-// Функция для проверки единственности решения
-bool PictureService::isUniqueSolution(const vector<bitset<MAX_SIZE>>& nonogram) {
-    unordered_map<bitset<MAX_SIZE>, int> rowCounts, colCounts;
-
-    // Подсчет групп символов для каждой строки
-    for (int i = 0; i < nonogram.size(); ++i) {
-        vector<bitset<MAX_SIZE>> groups = countGroups(nonogram[i]);
-        for (auto& group : groups) {
-            rowCounts[group]++;
-        }
-    }
-
-    // Подсчет групп символов для каждого столбца
-    for (int j = 0; j < nonogram[0].size(); ++j) {
-        bitset<MAX_SIZE> col;
-        for (int i = 0; i < nonogram.size(); ++i) {
-            col.set(i, nonogram[i].test(j));
-        }
-        vector<bitset<MAX_SIZE>> groups = countGroups(col);
-        for (auto& group : groups) {
-            colCounts[group]++;
-        }
-    }
-
-    // Проверка единственности решения
-    for (auto& p : rowCounts) {
-        if (p.second > 1) {
-            return false;
-        }
-    }
-    for (auto& p : colCounts) {
-        if (p.second > 1) {
-            return false;
-        }
-    }
-
-    return true;
 }
 
 
