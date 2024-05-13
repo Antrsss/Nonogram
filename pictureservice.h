@@ -83,13 +83,6 @@ private:
 
     void calculateGameComplexity();
 
-    vector<bitset<MAX_SIZE>> imageToNonogram(const QImage &image, int upBoard, int downBoard, int leftBoard, int rightBoard);
-
-    vector<bitset<MAX_SIZE>> countGroups(const bitset<MAX_SIZE> &row);
-
-    bool isUniqueSolution(const vector<bitset<MAX_SIZE>>& nonogram);
-
-
 private slots:
 
     void on_nonogram_cellClicked(int row, int column);

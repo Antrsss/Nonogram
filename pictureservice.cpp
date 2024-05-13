@@ -229,18 +229,6 @@ void PictureService::createNonogram(QImage image) {
         }
 
         qDebug() << upBoard << downBoard << leftBoard << rightBoard;
-        //анализ единственности решения
-        vector<bitset<MAX_SIZE>> nonogram = imageToNonogram(image, upBoard, downBoard, leftBoard, rightBoard);
-
-        if (isUniqueSolution(nonogram)) {
-            _singleSolution_lineEdit->setText("Nonogram has single solution!");
-            _singleSolution_lineEdit->setGeometry((this->width() - 440) / 2, 50, 440, 50);
-            qDebug() << "Single";
-        } else {
-            _singleSolution_lineEdit->setText("Nonogram has multiple solutions!");
-            _singleSolution_lineEdit->setGeometry((this->width() - 490) / 2, 50, 490, 50);
-            qDebug() << "Multiple";
-        }
 
         calculateGameComplexity();
         _gameComplexity_lineEdit->setText(QString::number(_gameComplexity));
