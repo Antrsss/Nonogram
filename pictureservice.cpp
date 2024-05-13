@@ -228,8 +228,6 @@ void PictureService::createNonogram(QImage image) {
             }
         }
 
-        qDebug() << upBoard << downBoard << leftBoard << rightBoard;
-
         calculateGameComplexity();
         _gameComplexity_lineEdit->setText(QString::number(_gameComplexity));
         _gameComplexity_lineEdit->setGeometry(this->_singleSolution_lineEdit->width(), 50, 40, 50);
