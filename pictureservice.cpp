@@ -228,6 +228,20 @@ void PictureService::createNonogram(QImage image) {
             }
         }
 
+        //анализ единственности решения
+        vector<bitset<MAX_SIZE>> nonogram = imageToNonogram(image, upBoard, downBoard, leftBoard, rightBoard);
+
+        if (isUniqueSolution(nonogram)) {
+            _singleSolution_lineEdit->setText("Nonogram has single solution!");
+            _singleSolution_lineEdit->setGeometry((this->width() - 440) / 2, 50, 440, 50);
+            qDebug() << "Single";
+        }
+        else {
+            _singleSolution_lineEdit->setText("Nonogram has multiple solutions!");
+            _singleSolution_lineEdit->setGeometry((this->width() - 500) / 2, 50, 500, 50);
+            qDebug() << "Multiple";
+        }
+
         calculateGameComplexity();
         _gameComplexity_lineEdit->setText(QString::number(_gameComplexity));
         _gameComplexity_lineEdit->setGeometry(this->_singleSolution_lineEdit->width(), 50, 40, 50);
@@ -336,8 +350,6 @@ void PictureService::calculateProfileScore() {
     }
 }
 
-
-
 void PictureService::showSuccessMessage() {
     QLabel *gameScoreLabel = new QLabel(_nonogramSolved);
     gameScoreLabel->setText("Game Score: " + QString::number(_gameScore));
@@ -370,6 +382,79 @@ void PictureService::calculateGameComplexity() {
         _gameComplexity = 4;
     else
         _gameComplexity = 5;
+}
+
+vector<bitset<MAX_SIZE>>
+PictureService::imageToNonogram(const QImage &image, int upBoard, int downBoard, int leftBoard, int rightBoard) {
+    vector<bitset<MAX_SIZE>> nonogram;
+    for (int i = 0; i < image.height(); ++i) {
+        bitset<MAX_SIZE> row;
+        for (int j = 0; j < image.width(); ++j) {
+            QColor pixelColor = image.pixelColor(j, i);
+            if (pixelColor == Qt::black) {
+                row.set(j);
+            }
+        }
+        nonogram.push_back(row);
+    }
+    return nonogram;
+}
+
+vector<bitset<MAX_SIZE>> PictureService::countGroups(const bitset<MAX_SIZE> &row) {
+    vector<bitset<MAX_SIZE>> groups;
+    bitset<MAX_SIZE> currentGroup;
+    for (int i = 0; i < row.size(); ++i) {
+        if (row.test(i)) {
+            currentGroup.set(i);
+        } else {
+            if (currentGroup.any()) {
+                groups.push_back(currentGroup);
+                currentGroup.reset();
+            }
+        }
+    }
+    if (currentGroup.any()) {
+        groups.push_back(currentGroup);
+    }
+    return groups;
+}
+
+bool PictureService::isUniqueSolution(const vector<bitset<MAX_SIZE>> &nonogram) {
+    unordered_map<bitset<MAX_SIZE>, int> rowCounts, colCounts;
+
+    // Подсчет групп символов для каждой строки
+    for (int i = 0; i < nonogram.size(); ++i) {
+        vector<bitset<MAX_SIZE>> groups = countGroups(nonogram[i]);
+        for (auto& group : groups) {
+            rowCounts[group]++;
+        }
+    }
+
+    // Подсчет групп символов для каждого столбца
+    for (int j = 0; j < nonogram[0].size(); ++j) {
+        bitset<MAX_SIZE> col;
+        for (int i = 0; i < nonogram.size(); ++i) {
+            col.set(i, nonogram[i].test(j));
+        }
+        vector<bitset<MAX_SIZE>> groups = countGroups(col);
+        for (auto& group : groups) {
+            colCounts[group]++;
+        }
+    }
+
+    // Проверка единственности решения
+    for (auto& p : rowCounts) {
+        if (p.second > 1) {
+            return false;
+        }
+    }
+    for (auto& p : colCounts) {
+        if (p.second > 1) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 
