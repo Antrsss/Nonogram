@@ -4,8 +4,8 @@
 
 // You may need to build the project (run Qt uic code generator) to get "ui_PictureService.h" resolved
 
-#include "pictureservice.h"
-#include "ui_pictureservice.h"
+#include "../Headers/pictureservice.h"
+#include "../Ui/ui_pictureservice.h"
 
 
 PictureService::PictureService(QWidget *parent) :
@@ -229,7 +229,7 @@ void PictureService::createNonogram(QImage image) {
         }
 
         //анализ единственности решения
-        vector<bitset<MAX_SIZE>> nonogram = imageToNonogram(image, upBoard, downBoard, leftBoard, rightBoard);
+        std::vector<std::bitset<MAX_SIZE>> nonogram = imageToNonogram(image, upBoard, downBoard, leftBoard, rightBoard);
 
         if (isUniqueSolution(nonogram)) {
             _singleSolution_lineEdit->setText("Nonogram has single solution!");
@@ -384,14 +384,15 @@ void PictureService::calculateGameComplexity() {
         _gameComplexity = 5;
 }
 
-vector<bitset<MAX_SIZE>>
+std::vector<std::bitset<MAX_SIZE>>
 PictureService::imageToNonogram(const QImage &image, int upBoard, int downBoard, int leftBoard, int rightBoard) {
-    vector<bitset<MAX_SIZE>> nonogram;
-    for (int i = 0; i < image.height(); ++i) {
-        bitset<MAX_SIZE> row;
-        for (int j = 0; j < image.width(); ++j) {
+    --upBoard, --downBoard, --leftBoard, --rightBoard;
+    std::vector<std::bitset<MAX_SIZE>> nonogram;
+    for (int i = upBoard; i <= downBoard; ++i) {
+        std::bitset<MAX_SIZE> row;
+        for (int j = leftBoard; j <= rightBoard; ++j) {
             QColor pixelColor = image.pixelColor(j, i);
-            if (pixelColor == Qt::black) {
+            if (pixelColor != Qt::white) {
                 row.set(j);
             }
         }
@@ -400,9 +401,9 @@ PictureService::imageToNonogram(const QImage &image, int upBoard, int downBoard,
     return nonogram;
 }
 
-vector<bitset<MAX_SIZE>> PictureService::countGroups(const bitset<MAX_SIZE> &row) {
-    vector<bitset<MAX_SIZE>> groups;
-    bitset<MAX_SIZE> currentGroup;
+std::vector<std::bitset<MAX_SIZE>> PictureService::countGroups(const std::bitset<MAX_SIZE> &row) {
+    std::vector<std::bitset<MAX_SIZE>> groups;
+    std::bitset<MAX_SIZE> currentGroup;
     for (int i = 0; i < row.size(); ++i) {
         if (row.test(i)) {
             currentGroup.set(i);
@@ -419,12 +420,12 @@ vector<bitset<MAX_SIZE>> PictureService::countGroups(const bitset<MAX_SIZE> &row
     return groups;
 }
 
-bool PictureService::isUniqueSolution(const vector<bitset<MAX_SIZE>> &nonogram) {
-    unordered_map<bitset<MAX_SIZE>, int> rowCounts, colCounts;
+bool PictureService::isUniqueSolution(const std::vector<std::bitset<MAX_SIZE>> &nonogram) {
+    std::unordered_map<std::bitset<MAX_SIZE>, int> rowCounts, columnCounts;
 
     // Подсчет групп символов для каждой строки
     for (int i = 0; i < nonogram.size(); ++i) {
-        vector<bitset<MAX_SIZE>> groups = countGroups(nonogram[i]);
+        std::vector<std::bitset<MAX_SIZE>> groups = countGroups(nonogram[i]);
         for (auto& group : groups) {
             rowCounts[group]++;
         }
@@ -432,13 +433,13 @@ bool PictureService::isUniqueSolution(const vector<bitset<MAX_SIZE>> &nonogram) 
 
     // Подсчет групп символов для каждого столбца
     for (int j = 0; j < nonogram[0].size(); ++j) {
-        bitset<MAX_SIZE> col;
+        std::bitset<MAX_SIZE> col;
         for (int i = 0; i < nonogram.size(); ++i) {
             col.set(i, nonogram[i].test(j));
         }
-        vector<bitset<MAX_SIZE>> groups = countGroups(col);
+        std::vector<std::bitset<MAX_SIZE>> groups = countGroups(col);
         for (auto& group : groups) {
-            colCounts[group]++;
+            columnCounts[group]++;
         }
     }
 
@@ -448,7 +449,7 @@ bool PictureService::isUniqueSolution(const vector<bitset<MAX_SIZE>> &nonogram) 
             return false;
         }
     }
-    for (auto& p : colCounts) {
+    for (auto& p : columnCounts) {
         if (p.second > 1) {
             return false;
         }

@@ -5,9 +5,6 @@
 #ifndef NONOGRAM_PICTURESERVICE_H
 #define NONOGRAM_PICTURESERVICE_H
 
-const long WHITE_NUMBER = 4294967295;
-const int MAX_SIZE = 40;
-const int TIMER_INTERVAL = 5000;
 
 #include <QWidget>
 #include <QTableWidget>
@@ -28,8 +25,10 @@ const int TIMER_INTERVAL = 5000;
 #include <cmath>
 #include <unordered_map>
 
-
-using namespace std;
+const long WHITE_NUMBER = 4294967295;
+const int MAX_SIZE = 40;
+const int TIMER_INTERVAL = 5000;
+const QString USER_DATA_PATH = "../Score.txt";
 
 
 QT_BEGIN_NAMESPACE
@@ -51,11 +50,11 @@ public:
 private:
     Ui::PictureService *ui;
 
-    int _matrix40[40][40];
-    int _coloredCellsRow[40]{0};
-    int _coloredCellsColumns[40]{0};
-    int _filledCellsRow[40]{0};
-    int _filledCellsColumn[40]{0};
+    int _matrix40[MAX_SIZE][MAX_SIZE];
+    int _coloredCellsRow[MAX_SIZE]{0};
+    int _coloredCellsColumns[MAX_SIZE]{0};
+    int _filledCellsRow[MAX_SIZE]{0};
+    int _filledCellsColumn[MAX_SIZE]{0};
     int _coloredCells;
     int _filledCells;
     int _mistakes;
@@ -75,7 +74,7 @@ private:
     QLineEdit *_gameComplexity_lineEdit;
     std::ifstream input;
     std::ofstream output; //write
-    QString _scoreFile = "/home/zgdarya/QTWORKS/Nonogram/Score.txt";
+    QString _scoreFile = USER_DATA_PATH;
 
     void calculateGameScore();
 
@@ -83,11 +82,11 @@ private:
 
     void calculateGameComplexity();
 
-    vector<bitset<MAX_SIZE>> imageToNonogram(const QImage& image, int upBoard, int downBoard, int leftBoard, int rightBoard);
+    std::vector<std::bitset<MAX_SIZE>> imageToNonogram(const QImage& image, int upBoard, int downBoard, int leftBoard, int rightBoard);
 
-    vector<bitset<MAX_SIZE>> countGroups(const bitset<MAX_SIZE>& row);
+    std::vector<std::bitset<MAX_SIZE>> countGroups(const std::bitset<MAX_SIZE>& row);
 
-    bool isUniqueSolution(const vector<bitset<MAX_SIZE>>& nonogram);
+    bool isUniqueSolution(const std::vector<std::bitset<MAX_SIZE>>& nonogram);
 
 private slots:
 

@@ -14,12 +14,12 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
-        widget.cpp
-        widget.h
-        widget.ui
-        pictureservice.h
-        pictureservice.cpp
-        pictureservice.ui
+        Sources/widget.cpp
+        Headers/widget.h
+        Ui/widget.ui
+        Headers/pictureservice.h
+        Sources/pictureservice.cpp
+        Ui/pictureservice.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

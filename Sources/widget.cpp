@@ -1,11 +1,11 @@
-#include "widget.h"
-#include "ui_widget.h"
+#include "../Headers/widget.h"
+#include "../Ui/ui_widget.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent), ui(new Ui::Widget) {
     ui->setupUi(this);
 
-    _scoreFile = "/home/zgdarya/QTWORKS/Nonogram/Score.txt";
+    _scoreFile = USER_DATA_PATH;
     if (_scoreFile != nullptr && !input.is_open()) {
         input.open(_scoreFile.toUtf8(), std::ofstream::in);
     }

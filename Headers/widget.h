@@ -48,7 +48,7 @@ private slots:
 
 private:
     Ui::Widget *ui;
-    QString _scoreFile;
+    QString _scoreFile = USER_DATA_PATH;
     std::ifstream input;
     std::ofstream output; //write
     int _profileScore;
